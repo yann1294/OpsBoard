@@ -1,13 +1,40 @@
+import { Show, SignInButton } from "@clerk/nextjs";
+
 export default function Home() {
   return (
-    <div className="rounded-xl border border-slate-200 bg-white p-8 shadow-sm">
-      <h1 className="text-2xl font-semibold tracking-tight text-slate-900">
-        Frontend shell ready
-      </h1>
-      <p className="mt-3 max-w-2xl text-sm leading-6 text-slate-600">
-        This is the base App Router layout for OpsBoard. Next steps will add
-        Clerk auth, pipeline realtime cards, and sprint summary actions.
-      </p>
-    </div>
+    <>
+      <Show when="signed-out">
+        <section className="mx-auto max-w-2xl rounded-xl border border-slate-200 bg-white p-8 shadow-sm">
+          <h1 className="text-2xl font-semibold tracking-tight text-slate-900">
+            Welcome to OpsBoard
+          </h1>
+          <p className="mt-3 text-sm leading-6 text-slate-600">
+            Sign in to access the dashboard workspace for pipeline monitoring
+            and sprint reporting.
+          </p>
+          <div className="mt-6">
+            <SignInButton mode="modal">
+              <button
+                type="button"
+                className="rounded-md bg-slate-900 px-4 py-2 text-sm font-medium text-white hover:bg-slate-700"
+              >
+                Sign in to continue
+              </button>
+            </SignInButton>
+          </div>
+        </section>
+      </Show>
+      <Show when="signed-in">
+        <section className="rounded-xl border border-slate-200 bg-white p-8 shadow-sm">
+          <h1 className="text-2xl font-semibold tracking-tight text-slate-900">
+            Dashboard placeholder
+          </h1>
+          <p className="mt-3 max-w-2xl text-sm leading-6 text-slate-600">
+            Core dashboard widgets will be added next. This view is only shown
+            to authenticated users.
+          </p>
+        </section>
+      </Show>
+    </>
   );
 }
