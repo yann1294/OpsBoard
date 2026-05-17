@@ -1,4 +1,5 @@
 import { Show, SignInButton } from "@clerk/nextjs";
+import { PipelineFeed } from "@/features/pipelines/pipeline-feed";
 
 export default function Home() {
   return (
@@ -25,15 +26,18 @@ export default function Home() {
         </section>
       </Show>
       <Show when="signed-in">
-        <section className="rounded-xl border border-slate-200 bg-white p-8 shadow-sm">
-          <h1 className="text-2xl font-semibold tracking-tight text-slate-900">
-            Dashboard placeholder
-          </h1>
-          <p className="mt-3 max-w-2xl text-sm leading-6 text-slate-600">
-            Core dashboard widgets will be added next. This view is only shown
-            to authenticated users.
-          </p>
-        </section>
+        <div className="space-y-6">
+          <section className="rounded-xl border border-slate-200 bg-white p-8 shadow-sm">
+            <h1 className="text-2xl font-semibold tracking-tight text-slate-900">
+              Dashboard
+            </h1>
+            <p className="mt-3 max-w-2xl text-sm leading-6 text-slate-600">
+              Live pipelines are shown below. Additional dashboard modules will
+              be added next.
+            </p>
+          </section>
+          <PipelineFeed />
+        </div>
       </Show>
     </>
   );
