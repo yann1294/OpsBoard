@@ -1,13 +1,15 @@
 {
-  "name": "OpsBoard",
+  "name": "opsboard",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "private": true,
+  "description": "OpsBoard monorepo",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "pnpm -r --parallel dev",
+    "dev:local": "docker compose up --build",
+    "client:dev": "pnpm --filter ./client dev",
+    "server:dev": "pnpm --filter ./server dev",
+    "build": "pnpm -r build",
+    "lint": "pnpm -r lint"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "packageManager": "pnpm@10.15.0"
 }
