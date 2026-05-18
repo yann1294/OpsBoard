@@ -1,5 +1,6 @@
 import { Show, SignInButton } from "@clerk/nextjs";
 import { PipelineFeed } from "@/features/pipelines/pipeline-feed";
+import { SprintSummaryCard } from "@/features/sprint-summary/sprint-summary-card";
 
 export default function Home() {
   return (
@@ -36,7 +37,10 @@ export default function Home() {
               be added next.
             </p>
           </section>
-          <PipelineFeed />
+          <div className="grid gap-6 lg:grid-cols-2">
+            <PipelineFeed />
+            <SprintSummaryCard />
+          </div>
         </div>
       </Show>
     </>
