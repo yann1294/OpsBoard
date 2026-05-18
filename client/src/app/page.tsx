@@ -38,6 +38,13 @@ export default function Home() {
                 sprint summaries to keep delivery status clear for the team.
               </p>
             </div>
+            <div className="border-t border-slate-200 bg-slate-50 px-8 py-4">
+              <p className="text-sm text-slate-700">
+                <span className="font-semibold">Demo flow:</span> sign in, watch
+                live pipeline updates on the left, then generate an AI sprint
+                summary on the right.
+              </p>
+            </div>
           </section>
 
           <section className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">

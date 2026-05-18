@@ -16,13 +16,20 @@ const statusStyles: Record<PipelineStatus, string> = {
 export function PipelineFeed() {
   const [isLive, setIsLive] = useState(false);
   const [runs, setRuns] = useState<PipelineRun[]>([]);
+  const [hasConnectionError, setHasConnectionError] = useState(false);
 
   useEffect(() => {
     const socket = createSocket();
 
-    socket.on("connect", () => setIsLive(true));
+    socket.on("connect", () => {
+      setIsLive(true);
+      setHasConnectionError(false);
+    });
     socket.on("disconnect", () => setIsLive(false));
-    socket.on("connect_error", () => setIsLive(false));
+    socket.on("connect_error", () => {
+      setIsLive(false);
+      setHasConnectionError(true);
+    });
 
     socket.on("pipeline:snapshot", (snapshot: PipelineRun[]) => {
       setRuns(snapshot.slice(0, MAX_RUNS));
@@ -59,9 +66,17 @@ export function PipelineFeed() {
       </div>
 
       <div className="space-y-3">
+        {hasConnectionError ? (
+          <p className="rounded-lg border border-red-200 bg-red-50 p-4 text-sm text-red-700">
+            Realtime connection failed. Check backend status and socket URL.
+          </p>
+        ) : null}
+
         {runs.length === 0 ? (
           <p className="rounded-lg border border-dashed border-slate-200 p-4 text-sm text-slate-500">
-            Waiting for pipeline events...
+            {isLive
+              ? "Connected. Waiting for pipeline events..."
+              : "Connecting to realtime feed..."}
           </p>
         ) : (
           runs.map((run) => (

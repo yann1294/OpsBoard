@@ -65,6 +65,15 @@ export function SprintSummaryCard() {
         </p>
       ) : null}
 
+      {summaryMutation.isPending ? (
+        <div className="space-y-3">
+          <p className="rounded-lg border border-blue-200 bg-blue-50 p-3 text-sm text-blue-700">
+            Generating sprint summary from current mock sprint context...
+          </p>
+          <div className="h-28 animate-pulse rounded-lg border border-slate-200 bg-slate-100" />
+        </div>
+      ) : null}
+
       {summaryMutation.isSuccess ? (
         <div className="space-y-3">
           <p className="rounded-lg border border-slate-200 bg-slate-50 p-4 text-sm leading-6 whitespace-pre-wrap text-slate-700">
@@ -75,12 +84,12 @@ export function SprintSummaryCard() {
             {new Date(summaryMutation.data.generatedAt).toLocaleString()}
           </p>
         </div>
-      ) : (
+      ) : !summaryMutation.isPending ? (
         <p className="text-sm text-slate-500">
           Generate a concise sprint update with executive summary, completed
           work, blockers, and next actions.
         </p>
-      )}
+      ) : null}
     </section>
   );
 }
