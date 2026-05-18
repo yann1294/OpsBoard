@@ -1,3 +1,4 @@
+import { GitHubActionsCard } from "@/features/integrations/github-actions-card";
 import { Show, SignInButton } from "@clerk/nextjs";
 import { PipelineFeed } from "@/features/pipelines/pipeline-feed";
 import { SprintSummaryCard } from "@/features/sprint-summary/sprint-summary-card";
@@ -88,6 +89,8 @@ export default function Home() {
               <SprintSummaryCard />
             </div>
           </section>
+
+          <GitHubActionsCard />
         </div>
       </Show>
     </>
