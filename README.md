@@ -35,11 +35,22 @@ Engineering teams often track delivery status across multiple tools (CI, PRs, sp
 
 ```mermaid
 flowchart LR
-  U[User] --> W[OpsBoard Web\nNext.js + Clerk]
-  W -->|Bearer token| A[OpsBoard API\nNestJS]
-  W <-->|Socket.IO| A
-  A --> C[Clerk Verify Token]
-  A --> G[Gemini API]
+  U[User Browser]
+  W[Next.js Client on Render]
+  A[NestJS API on Render]
+  C[Clerk Auth]
+  G[Gemini API]
+  MP[Mock Pipeline Data]
+  MS[Mock Sprint Data]
+
+  U --> W
+  W -->|REST: /pipelines /sprint/mock /sprint/summary| A
+  W <-->|Socket.IO realtime| A
+  W -->|Session token| C
+  A -->|verifyToken| C
+  A -->|summarizeSprint| G
+  A --> MP
+  A --> MS
 ```
 
 ## Local Setup
@@ -109,7 +120,7 @@ pnpm --filter ./client dev
 - `GET /pipelines` — returns pipeline runs (public)
 - `GET /sprint/mock` — returns mock sprint data (public)
 - `GET /sprint/summary` — returns AI sprint summary (protected by Clerk auth guard)
-- `GET /health` — health endpoint for Render checks (configure/enable in backend if not present yet)
+- `GET /health` — health endpoint for Render checks
 
 ## Socket.IO Events
 
