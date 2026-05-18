@@ -28,19 +28,59 @@ export default function Home() {
       </Show>
       <Show when="signed-in">
         <div className="space-y-6">
-          <section className="rounded-xl border border-slate-200 bg-white p-8 shadow-sm">
-            <h1 className="text-2xl font-semibold tracking-tight text-slate-900">
-              Dashboard
-            </h1>
-            <p className="mt-3 max-w-2xl text-sm leading-6 text-slate-600">
-              Live pipelines are shown below. Additional dashboard modules will
-              be added next.
-            </p>
+          <section className="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
+            <div className="bg-gradient-to-r from-slate-900 via-slate-800 to-slate-700 p-8 text-white">
+              <h1 className="text-3xl font-semibold tracking-tight">
+                Engineering Operations Dashboard
+              </h1>
+              <p className="mt-3 max-w-2xl text-sm leading-6 text-slate-200">
+                Track CI/CD execution in real time and generate concise AI
+                sprint summaries to keep delivery status clear for the team.
+              </p>
+            </div>
           </section>
-          <div className="grid gap-6 lg:grid-cols-2">
-            <PipelineFeed />
-            <SprintSummaryCard />
-          </div>
+
+          <section className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            <article className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+              <p className="text-xs font-medium uppercase tracking-wide text-slate-500">
+                Pipeline Success Rate
+              </p>
+              <p className="mt-2 text-2xl font-semibold tracking-tight text-emerald-600">
+                82%
+              </p>
+            </article>
+            <article className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+              <p className="text-xs font-medium uppercase tracking-wide text-slate-500">
+                Avg Build Time
+              </p>
+              <p className="mt-2 text-2xl font-semibold tracking-tight text-slate-900">
+                2m 18s
+              </p>
+            </article>
+            <article className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm sm:col-span-2 lg:col-span-1">
+              <p className="text-xs font-medium uppercase tracking-wide text-slate-500">
+                Open PRs
+              </p>
+              <p className="mt-2 text-2xl font-semibold tracking-tight text-blue-600">
+                4
+              </p>
+            </article>
+          </section>
+
+          <section className="grid gap-6 lg:grid-cols-2">
+            <div className="space-y-2">
+              <h2 className="text-sm font-semibold uppercase tracking-wide text-slate-500">
+                Live Pipeline Feed
+              </h2>
+              <PipelineFeed />
+            </div>
+            <div className="space-y-2">
+              <h2 className="text-sm font-semibold uppercase tracking-wide text-slate-500">
+                AI Sprint Summary
+              </h2>
+              <SprintSummaryCard />
+            </div>
+          </section>
         </div>
       </Show>
     </>
