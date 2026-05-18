@@ -2,6 +2,10 @@
 
 OpsBoard is a full-stack DevOps visibility dashboard that combines **live CI/CD pipeline activity** with **AI-generated sprint summaries** for faster engineering status reporting.
 
+## Current Version
+
+MVP v0.1.0 includes authentication, real-time pipeline updates, AI sprint summaries, Dockerized local development, and Render deployment.
+
 ## Live Demo
 
 - Frontend: `https://<your-opsboard-web>.onrender.com`
