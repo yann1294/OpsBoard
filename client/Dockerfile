@@ -3,25 +3,22 @@ WORKDIR /app
 RUN corepack enable && corepack prepare pnpm@10.15.0 --activate
 
 FROM base AS deps
-COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
-COPY client/package.json ./client/package.json
-RUN pnpm install --filter ./client... --frozen-lockfile
+COPY package.json ./
+RUN pnpm install --no-frozen-lockfile
 
 FROM deps AS dev
 EXPOSE 3000
-CMD ["pnpm", "--filter", "./client", "dev", "--", "-H", "0.0.0.0", "-p", "3000"]
+CMD ["pnpm", "dev", "--", "-H", "0.0.0.0", "-p", "3000"]
 
 FROM deps AS build
-COPY client ./client
-RUN pnpm --filter ./client build
+COPY . .
+RUN pnpm build
 
 FROM base AS prod
-COPY --from=deps /app/node_modules ./node_modules
-COPY --from=deps /app/client/node_modules ./client/node_modules
-COPY --from=build /app/client/.next ./client/.next
-COPY --from=build /app/client/public ./client/public
-COPY --from=build /app/client/next.config.ts ./client/next.config.ts
-COPY --from=build /app/client/package.json ./client/package.json
-WORKDIR /app/client
+COPY package.json ./
+RUN pnpm install --prod --no-frozen-lockfile
+COPY --from=build /app/.next ./.next
+COPY --from=build /app/public ./public
+COPY --from=build /app/next.config.ts ./next.config.ts
 EXPOSE 3000
 CMD ["pnpm", "start", "--", "-H", "0.0.0.0", "-p", "3000"]
