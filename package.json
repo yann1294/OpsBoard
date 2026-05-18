@@ -4,7 +4,7 @@
   "private": true,
   "description": "OpsBoard monorepo",
   "scripts": {
-    "dev": "pnpm -r --parallel dev",
+    "dev": "docker compose up --build",
     "dev:local": "docker compose up --build",
     "client:dev": "pnpm --filter ./client dev",
     "server:dev": "pnpm --filter ./server dev",

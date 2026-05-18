@@ -1,0 +1,32 @@
+services:
+  server:
+    build:
+      context: .
+      dockerfile: server/Dockerfile
+      target: dev
+    env_file:
+      - ./server/.env
+    ports:
+      - "4000:4000"
+    volumes:
+      - ./:/app
+      - /app/node_modules
+      - /app/server/node_modules
+    command: pnpm --filter ./server start:dev
+
+  client:
+    build:
+      context: .
+      dockerfile: client/Dockerfile
+      target: dev
+    env_file:
+      - ./client/.env.local
+    ports:
+      - "3000:3000"
+    depends_on:
+      - server
+    volumes:
+      - ./:/app
+      - /app/node_modules
+      - /app/client/node_modules
+    command: pnpm --filter ./client dev -- -H 0.0.0.0 -p 3000
