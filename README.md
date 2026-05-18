@@ -91,13 +91,13 @@ pnpm --filter ./client dev
 - `PORT=4000`
 - `CLIENT_URL=http://localhost:3000`
 - `CLERK_SECRET_KEY=`
+- `CLERK_AUTHORIZED_PARTIES=http://localhost:3000`
 - `GEMINI_API_KEY=`
 - `GEMINI_MODEL=gemini-3-flash-preview`
 
 ### `client/.env.local`
 
 - `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=`
-- `CLERK_SECRET_KEY=`
 - `NEXT_PUBLIC_API_URL=http://localhost:4000`
 - `NEXT_PUBLIC_SOCKET_URL=http://localhost:4000`
 

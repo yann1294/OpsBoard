@@ -1,4 +1,9 @@
-import { Injectable } from '@nestjs/common';
+import {
+  BadGatewayException,
+  Injectable,
+  InternalServerErrorException,
+  ServiceUnavailableException,
+} from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { GoogleGenAI } from '@google/genai';
 
@@ -12,7 +17,7 @@ export class AiService {
       this.configService.get<string>('GEMINI_MODEL') ?? 'gemini-3-flash-preview';
 
     if (!apiKey) {
-      throw new Error('GEMINI_API_KEY is not configured');
+      throw new InternalServerErrorException('GEMINI_API_KEY is not configured');
     }
 
     const ai = new GoogleGenAI({ apiKey });
@@ -31,14 +36,21 @@ export class AiService {
       `Sprint data: ${JSON.stringify(input)}`,
     ].join('\n');
 
-    const response = await ai.models.generateContent({
-      model,
-      contents: prompt,
-    });
+    let response: Awaited<ReturnType<typeof ai.models.generateContent>>;
+    try {
+      response = await ai.models.generateContent({
+        model,
+        contents: prompt,
+      });
+    } catch {
+      throw new BadGatewayException('Gemini request failed');
+    }
 
     const text = response.text?.trim();
     if (!text) {
-      return 'Executive summary: No summary content returned by Gemini.';
+      throw new ServiceUnavailableException(
+        'Gemini returned an empty summary response',
+      );
     }
 
     return text;

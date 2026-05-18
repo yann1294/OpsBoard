@@ -9,6 +9,26 @@ type SprintSummaryResponse = {
   generatedAt: string;
 };
 
+function getFriendlyErrorMessage(error: Error): string {
+  if (error.message.includes("401")) {
+    return "Your session expired or is invalid. Please sign in again and retry.";
+  }
+
+  if (error.message.includes("403")) {
+    return "You are not authorized to generate this summary.";
+  }
+
+  if (error.message.includes("500")) {
+    return "The backend is misconfigured or unavailable. Check server environment variables.";
+  }
+
+  if (error.message.includes("502") || error.message.includes("503")) {
+    return "AI summary service is currently unavailable. Please retry shortly.";
+  }
+
+  return error.message;
+}
+
 export function SprintSummaryCard() {
   const { getToken } = useAuth();
 
@@ -41,7 +61,7 @@ export function SprintSummaryCard() {
 
       {summaryMutation.isError ? (
         <p className="rounded-lg border border-red-200 bg-red-50 p-3 text-sm text-red-700">
-          {summaryMutation.error.message}
+          {getFriendlyErrorMessage(summaryMutation.error)}
         </p>
       ) : null}
 

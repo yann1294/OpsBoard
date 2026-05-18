@@ -34,8 +34,13 @@ export class ClerkAuthGuard implements CanActivate {
       throw new UnauthorizedException('Token is invalid');
     }
 
+    const authorizedParties = this.getAuthorizedParties();
+
     try {
-      const payload = await verifyToken(token, { secretKey });
+      const payload = await verifyToken(token, {
+        secretKey,
+        ...(authorizedParties.length > 0 ? { authorizedParties } : {}),
+      });
       if (!payload) {
         throw new UnauthorizedException('Token is invalid');
       }
@@ -45,5 +50,25 @@ export class ClerkAuthGuard implements CanActivate {
     } catch {
       throw new UnauthorizedException('Token is invalid');
     }
+  }
+
+  private getAuthorizedParties(): string[] {
+    const explicitAuthorizedParties = this.configService.get<string>(
+      'CLERK_AUTHORIZED_PARTIES',
+    );
+
+    if (explicitAuthorizedParties) {
+      return explicitAuthorizedParties
+        .split(',')
+        .map((value) => value.trim())
+        .filter(Boolean);
+    }
+
+    const clientUrl = this.configService.get<string>('CLIENT_URL');
+    if (!clientUrl) {
+      return [];
+    }
+
+    return [clientUrl];
   }
 }

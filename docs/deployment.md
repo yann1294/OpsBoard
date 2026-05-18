@@ -19,6 +19,7 @@ This guide deploys OpsBoard as two Render Web Services:
 - `PORT=4000`
 - `CLIENT_URL=<frontend-render-url>`
 - `CLERK_SECRET_KEY=<your-clerk-secret-key>`
+- `CLERK_AUTHORIZED_PARTIES=<frontend-render-url>`
 - `GEMINI_API_KEY=<your-gemini-api-key>`
 - `GEMINI_MODEL=gemini-3-flash-preview`
 
@@ -33,7 +34,6 @@ This guide deploys OpsBoard as two Render Web Services:
 ### Environment Variables
 
 - `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=<your-clerk-publishable-key>`
-- `CLERK_SECRET_KEY=<your-clerk-secret-key>`
 - `NEXT_PUBLIC_API_URL=<backend-render-url>`
 - `NEXT_PUBLIC_SOCKET_URL=<backend-render-url>`
 

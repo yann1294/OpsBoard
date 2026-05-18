@@ -3,8 +3,8 @@ WORKDIR /app
 RUN corepack enable && corepack prepare pnpm@10.15.0 --activate
 
 FROM base AS deps
-COPY package.json ./
-RUN pnpm install --no-frozen-lockfile
+COPY package.json pnpm-lock.yaml ./
+RUN pnpm install --frozen-lockfile
 
 FROM deps AS dev
 EXPOSE 4000
@@ -15,8 +15,8 @@ COPY . .
 RUN pnpm build
 
 FROM base AS prod
-COPY package.json ./
-RUN pnpm install --prod --no-frozen-lockfile
+COPY package.json pnpm-lock.yaml ./
+RUN pnpm install --prod --frozen-lockfile
 COPY --from=build /app/dist ./dist
 EXPOSE 4000
 CMD ["node", "dist/main.js"]
