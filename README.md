@@ -6,6 +6,16 @@ OpsBoard is a full-stack DevOps visibility dashboard that combines **live CI/CD 
 
 MVP v0.1.0 includes authentication, real-time pipeline updates, AI sprint summaries, Dockerized local development, and Render deployment.
 
+## What This Demonstrates
+
+- Full-stack TypeScript development
+- Real-time WebSocket communication
+- Authentication with Clerk
+- AI API integration with Gemini
+- Dockerized local development
+- Cloud deployment on Render
+- DevOps-style dashboard design
+
 ## Live Demo
 
 - Frontend: `https://<your-opsboard-web>.onrender.com`
